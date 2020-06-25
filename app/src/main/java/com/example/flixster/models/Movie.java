@@ -1,5 +1,7 @@
 package com.example.flixster.models;
 
+import com.example.flixster.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
