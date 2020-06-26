@@ -2,6 +2,7 @@ package com.example.flixster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.util.Log;
@@ -9,10 +10,17 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.flixster.models.Movie;
 import com.example.flixster.databinding.ActivityMovieDetailsBinding;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
+
+import okhttp3.Headers;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -50,5 +58,54 @@ public class MovieDetailsActivity extends AppCompatActivity {
         //calculate vote average
         float voteAverage = movie.getVoteAverage().floatValue();
         rbVoteAverage.setRating(voteAverage = voteAverage > 0 ? voteAverage / 2.0f : voteAverage);
+
+
+        //getting the youtube key from the api
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("https://api.themoviedb.org/3/movie/" + movie.getId() +"/videos?api_key="+ getString(R.string.movies_api_key) + "&language=en-US", new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONArray results = jsonObject.getJSONArray("results");
+                    if(results.length() > 0){
+                        JSONObject object = results.getJSONObject(0);
+                        final String key = object.getString("key");
+                        Log.d("MovieDetailsActivity","Key: " + key);
+
+                        //when clicking overview, go to movie trailer activity
+                        tvOverview.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(MovieDetailsActivity.this,MovieTrailerActivity.class);
+                                //sending the movie key to movie trailer activity
+                                intent.putExtra("key",key);
+                                startActivity(intent);
+                            }
+                        });
+
+
+                    }else{
+                        //show user that a video does not exist
+                    }
+
+
+
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+            }
+        });
     }
 }
