@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.flixster.models.Movie;
@@ -26,11 +29,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     //movie to display
     Movie movie;
+    String imageUrl;
 
     //view objects
     TextView tvTitle;
     TextView tvOverview;
     RatingBar rbVoteAverage;
+    ImageView ivDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvTitle = (TextView) binding.tvTitle;
         tvOverview = (TextView) binding.tvOverview;
         rbVoteAverage = (RatingBar) binding.rbVoteAverage;
+        ivDetails = (ImageView) binding.ivDetails;
 
         //unwrap movie simple key passed via intent
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
@@ -59,8 +65,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         float voteAverage = movie.getVoteAverage().floatValue();
         rbVoteAverage.setRating(voteAverage = voteAverage > 0 ? voteAverage / 2.0f : voteAverage);
 
+        //set the image
+        imageUrl = movie.getBackdropPath();
+        Glide.with(MovieDetailsActivity.this).load(imageUrl).placeholder(R.drawable.flicks_backdrop_placeholder).into(ivDetails);
 
-        //getting the youtube key from the api
+        //getting the youtube key from the api and send to trailer activity
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("https://api.themoviedb.org/3/movie/" + movie.getId() +"/videos?api_key="+ getString(R.string.movies_api_key) + "&language=en-US", new JsonHttpResponseHandler() {
             @Override
@@ -74,7 +83,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                         Log.d("MovieDetailsActivity","Key: " + key);
 
                         //when clicking overview, go to movie trailer activity
-                        tvOverview.setOnClickListener(new View.OnClickListener() {
+                        ivDetails.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(MovieDetailsActivity.this,MovieTrailerActivity.class);
@@ -84,27 +93,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
                             }
                         });
 
-
                     }else{
-                        //show user that a video does not exist
+                        //TODO show user that a video does not exist
                     }
-
-
-
-
-
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
+                Log.e("MovieDetailsActivity","failed to get trailer Id");
             }
         });
     }

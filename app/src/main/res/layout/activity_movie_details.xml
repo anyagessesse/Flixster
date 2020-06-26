@@ -11,9 +11,12 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ivDetails"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="-1dp"
         android:text="@string/movie_title"
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -36,4 +39,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:text="@string/textview" />
+
+    <ImageView
+        android:id="@+id/ivDetails"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        tools:srcCompat="@tools:sample/avatars" />
 </RelativeLayout>

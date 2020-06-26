@@ -27,8 +27,8 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         playerView.initialize(getString(R.string.youtube_api_key), new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b){
-                //youTubePlayer.setFullscreen(true)
-                // do any work here to cue video, play video, etc.
+                // plays the youtube video
+                youTubePlayer.setFullscreen(true);
                 youTubePlayer.cueVideo(videoId);
             }
 
