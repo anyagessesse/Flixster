@@ -15,6 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:text="@string/movie_title"
+        android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <RatingBar

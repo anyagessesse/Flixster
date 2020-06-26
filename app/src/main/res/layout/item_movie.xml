@@ -23,7 +23,9 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="14dp"
         android:layout_toEndOf="@+id/ivPoster"
+        android:textColor="@color/indigo"
         android:textSize="24sp"
+        android:textStyle="bold"
         tools:text="Bloodshot" />
 
     <TextView
