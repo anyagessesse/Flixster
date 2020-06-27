@@ -41,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
         RecyclerView rvMovies = binding.rvMovies;
-        rvMovies.addItemDecoration(new DividerItemDecoration(rvMovies.getContext(),DividerItemDecoration.VERTICAL));
+
+        //adding a divider to the recyclerview
+        DividerItemDecoration divider = new DividerItemDecoration(rvMovies.getContext(),DividerItemDecoration.VERTICAL);
+        rvMovies.addItemDecoration(divider);
         movies = new ArrayList<>();
 
         //create the adaptor
