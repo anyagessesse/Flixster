@@ -2,7 +2,7 @@
 
 **Flixster** shows the latest movies currently playing in theaters. The app utilizes the Movie Database API to display images and basic information about these movies to the user.
 
-Time spent: **8** hours spent in total
+Time spent: **16** hours spent in total
 
 ## User Stories
 
@@ -31,13 +31,13 @@ The following **additional** features are implemented:
 Here's a walkthrough of implemented user stories:
 
 <img src='Flixster1.gif' title='Video Walkthrough' width='200' />
-<img src='Flixster2.gif' title='Video Walkthrough' width='200' />
+<img src='Flixster2.gif' title='Video Walkthrough' width='500' />
 
 GIF created with [Kap](https://getkap.co/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Biggest challenge was getting trailer videos to play. Helped me learn about intent and using jsono objects from an external API.
 
 ## Open-source libraries used
 
