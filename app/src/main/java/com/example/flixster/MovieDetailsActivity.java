@@ -8,6 +8,7 @@ import android.os.Parcel;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView tvOverview;
     RatingBar rbVoteAverage;
     ImageView ivDetails;
+    Button btnPlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvOverview = (TextView) binding.tvOverview;
         rbVoteAverage = (RatingBar) binding.rbVoteAverage;
         ivDetails = (ImageView) binding.ivDetails;
+        btnPlay = (Button) binding.btnPlay;
 
         //unwrap movie simple key passed via intent
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
@@ -83,7 +86,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                         Log.d("MovieDetailsActivity","Key: " + key);
 
                         //when clicking overview, go to movie trailer activity
-                        ivDetails.setOnClickListener(new View.OnClickListener() {
+                        btnPlay.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(MovieDetailsActivity.this,MovieTrailerActivity.class);
